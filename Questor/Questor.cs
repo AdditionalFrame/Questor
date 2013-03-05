@@ -345,29 +345,31 @@ namespace Questor
                     return true;
                 }
             }
-
-            if (DateTime.Now >= Cache.Instance.ManualRestartTime)
+            else
             {
-                Logging.Log("Questor", "Time to stop. ManualRestartTime reached. Quitting game.", Logging.White);
-                Cache.Instance.ReasonToStopQuestor = "ManualRestartTime reached.";
-                Settings.Instance.AutoStart = true;
-                Cache.Instance.CloseQuestorCMDLogoff = false;
-                Cache.Instance.CloseQuestorCMDExitGame = true;
-                Cache.Instance.SessionState = "Exiting";
-                Cleanup.BeginClosingQuestor();
-                return true;
-            }
+                if (DateTime.Now >= Cache.Instance.ManualRestartTime)
+                {
+                    Logging.Log("Questor", "Time to stop. ManualRestartTime reached. Quitting game.", Logging.White);
+                    Cache.Instance.ReasonToStopQuestor = "ManualRestartTime reached.";
+                    Settings.Instance.AutoStart = true;
+                    Cache.Instance.CloseQuestorCMDLogoff = false;
+                    Cache.Instance.CloseQuestorCMDExitGame = true;
+                    Cache.Instance.SessionState = "Exiting";
+                    Cleanup.BeginClosingQuestor();
+                    return true;
+                }
 
-            if (DateTime.Now >= Cache.Instance.ManualStopTime)
-            {
-                Logging.Log("Questor", "Time to stop. ManualStopTime reached. Quitting game.", Logging.White);
-                Cache.Instance.ReasonToStopQuestor = "ManualStopTime reached.";
-                Settings.Instance.AutoStart = false;
-                Cache.Instance.CloseQuestorCMDLogoff = false;
-                Cache.Instance.CloseQuestorCMDExitGame = true;
-                Cache.Instance.SessionState = "Exiting";
-                Cleanup.BeginClosingQuestor();
-                return true;
+                if (DateTime.Now >= Cache.Instance.ManualStopTime)
+                {
+                    Logging.Log("Questor", "Time to stop. ManualStopTime reached. Quitting game.", Logging.White);
+                    Cache.Instance.ReasonToStopQuestor = "ManualStopTime reached.";
+                    Settings.Instance.AutoStart = false;
+                    Cache.Instance.CloseQuestorCMDLogoff = false;
+                    Cache.Instance.CloseQuestorCMDExitGame = true;
+                    Cache.Instance.SessionState = "Exiting";
+                    Cleanup.BeginClosingQuestor();
+                    return true;
+                }
             }
 
             if (Cache.Instance.ExitWhenIdle)
